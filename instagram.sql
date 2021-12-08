@@ -18,26 +18,26 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База даних: `koledj`
+-- База даних: `inst1`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `groups`
+-- Структура таблиці `chats`
 --
 
-CREATE TABLE `groups` (
+CREATE TABLE `chats` (
   `id` int(11) NOT NULL,
   `group_name` varchar(8) NOT NULL,
-  `kurator_id` int(11) NOT NULL
+  `photo_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп даних таблиці `groups`
+-- Дамп даних таблиці `chats`
 --
 
-INSERT INTO `groups` (`id`, `group_name`, `kurator_id`) VALUES
+INSERT INTO `chats` (`id`, `group_name`, `photo_id`) VALUES
 (1, 'ІПЗ-31', 1),
 (2, 'ІПЗ-32', 1),
 (3, 'КІ-31', 2),
@@ -45,59 +45,63 @@ INSERT INTO `groups` (`id`, `group_name`, `kurator_id`) VALUES
 
 -- --------------------------------------------------------
 
-CREATE TABLE `kurators` (
+--
+-- Структура таблиці 'phots'
+--
+
+CREATE TABLE `phots` (
   `id` int(11) NOT NULL,
-  `pib_kuratora` varchar(100) NOT NULL
+  `photo_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп даних таблиці `kurators`
+-- Дамп даних таблиці `phots`
 --
 
-INSERT INTO `kurators` (`id`, `pib_kuratora`) VALUES
-(1, 'Грицан П.А.'),
-(2, 'Панасюк Г.В.'),
-(3, 'Юхта О.А.');
+INSERT INTO `phots` (`id`, `photo_name`) VALUES
+(1, 'Фото торта'),
+(2, 'Фото цукерок'),
+(3, 'Фото з Мальдів');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `students`
+-- Структура таблиці `accs`
 --
 
-CREATE TABLE `students` (
+CREATE TABLE `accs` (
   `id` int(11) NOT NULL,
-  `pib` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
   `grupa_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп даних таблиці `students`
+-- Дамп даних таблиці `accs`
 --
 
-INSERT INTO `students` (`id`, `pib`, `grupa_id`) VALUES
-(3, 'Захарченко Трофим Александрович', 1),
-(4, 'Никонов Владлен Сергеевич', 1),
-(5, 'Евдокимов Тит Михайлович', 1),
-(6, 'Шумейко Тит Григорьевич', 2),
-(7, 'Гаврилов Эдуард Евгеньевич', 2),
-(8, 'Павленко Зураб Юхимович', 2),
-(9, 'Яровой Харитон Анатолиевич', 3),
-(10, 'Пархоменко Игорь Вадимович', 4),
-(11, 'Дзюба Эдуард Леонидович', 3);
+INSERT INTO `accs` (`id`, `name`, `grupa_id`) VALUES
+(3, 'Захарченко Трофим', 1),
+(4, 'Никонов Владлен', 1),
+(5, 'Евдокимов Тит', 1),
+(6, 'Шумейко Тит', 2),
+(7, 'Гаврилов Эдуард', 2),
+(8, 'Павленко Зураб', 2),
+(9, 'Яровой Харитон', 3),
+(10, 'Пархоменко Игорь', 4),
+(11, 'Дзюба Эдуард', 3);
 
 --
 -- Індекси збережених таблиць
 --
 
-ALTER TABLE `groups`
+ALTER TABLE `chats`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `kurator_id` (`kurator_id`);
+  ADD KEY `photo_id` (`photo_id`);
 
-ALTER TABLE `kurators`
+ALTER TABLE `phots`
   ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `students`
+ALTER TABLE `accs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `grupa_id` (`grupa_id`);
 
@@ -105,24 +109,24 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT для збережених таблиць
 --
 
-ALTER TABLE `groups`
+ALTER TABLE `chats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
-ALTER TABLE `kurators`
+ALTER TABLE `phots`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
-ALTER TABLE `students`
+ALTER TABLE `accs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Обмеження зовнішнього ключа збережених таблиць
 --
 
-ALTER TABLE `groups`
-  ADD CONSTRAINT `groups_ibfk_1` FOREIGN KEY (`kurator_id`) REFERENCES `kurators` (`id`);
+ALTER TABLE `chats`
+  ADD CONSTRAINT `chats_ibfk_1` FOREIGN KEY (`photo_id`) REFERENCES `phots` (`id`);
 
-ALTER TABLE `students`
-  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`grupa_id`) REFERENCES `groups` (`id`);
+ALTER TABLE `accs`
+  ADD CONSTRAINT `accs_ibfk_1` FOREIGN KEY (`grupa_id`) REFERENCES `chats` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
